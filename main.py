@@ -1,6 +1,8 @@
 import pygame as py 
 import settings 
 import map
+import player as p 
+
 
 screen_w =  settings.sqaure_size * map.cols
 screen_h =  settings.sqaure_size * map.rows
@@ -13,19 +15,33 @@ clock  = py.time.Clock()
 
 
 
+player = p.Player(screen  , (200, (screen_h /2)) )
+
+
+
 running = True
 while running:
+    screen.fill((0, 0, 0)) 
+
     for event in py.event.get():
         if event.type == py.QUIT: 
             running = False
 
+        if event.type == py.KEYDOWN:
+            if event.key == py.K_SPACE:
+                player.jump()
+    
 
+
+
+
+    player.draw()
+    player.move()
     
     
     
     
     
-    screen.fill((0, 0, 0)) 
     py.display.flip() 
     clock.tick(settings.fps)
     
