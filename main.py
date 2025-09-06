@@ -2,7 +2,8 @@ import pygame as py
 import settings 
 import map
 import player as p 
-
+import random as rn
+import pipes as pipe_class
 
 screen_w =  settings.sqaure_size * map.cols
 screen_h =  settings.sqaure_size * map.rows
@@ -16,6 +17,14 @@ clock  = py.time.Clock()
 
 
 player = p.Player(screen  , (200, (screen_h /2)) )
+
+
+pipes = []
+pipe_timer = 50
+pipe_interval = 90 
+
+
+
 
 
 
@@ -38,8 +47,27 @@ while running:
     player.draw()
     player.move()
     
-    
-    
+
+
+
+    #pipes
+
+    if pipe_timer > pipe_interval:
+        pipe_timer = 0
+        gap_pos =  rn.randint(100, screen_h - 100)
+        pipes.append(pipe_class.Pipe(screen, screen_w, gap_pos))
+
+
+
+    for pipe in pipes[:]:
+        pipe.move()
+        pipe.draw(screen_h)
+        if pipe.is_off_screen():
+            pipes.remove(pipe)
+
+
+
+    pipe_timer += 1
     
     
     py.display.flip() 
